@@ -1,0 +1,604 @@
+<html>
+<head>
+<style>
+* {
+	box-sizing: border-box;
+	color: #666;
+	outline: none;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
+}
+#pbi-loading .pulsing-svg-item{
+	animation-iteration-count:infinite;
+	animation-direction:alternate;
+	animation-duration:750ms;
+	animation-name:pulse;
+	position:absolute;
+	top:50%;
+	left:50%;
+	width:100px;
+	height:auto;
+	transform:translate(-50%,-50%);
+	visibility:visible!important
+}
+#pbi-loading .loadingText{
+	position: absolute;
+	top: 50%;
+	left: 0%;
+	width: 100%;
+	height: auto;
+	visibility: visible!important;
+	margin-top: 50px;
+	text-align: center;
+	color: #aaa;
+}
+#pbi-loading .pulsing-svg-item .st1{
+	fill:#c8c8c8
+}
+@keyframes pulse{
+	0%{
+		opacity:1
+	}
+	100%{
+		opacity:.1
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {  /*safari and chrome*/
+	select {
+		height:30px;
+		line-height:30px;
+		background:#00000;
+	} 
+}
+select::-moz-focus-inner { /*Remove button padding in FF*/ 
+	border: 0;
+	padding: 0;
+}
+@-moz-document url-prefix() { /* targets Firefox only */
+	select {
+		padding: 15px 0!important;
+	}
+}		
+@media screen\0 { /* IE Hacks: targets IE 8, 9 and 10 */		
+	select {
+		height:30px;
+		line-height:30px;
+	}	 
+}
+
+.dialogWrapper {
+	position: relative;
+	max-height: 410px;
+	max-width: 940px;
+	min-width: 100px;
+	min-height: 100px;
+	padding: 28px 28px 28px 28px;
+	background-color: white;
+	border: #a6a6a6 solid 1px;
+	box-shadow: 0 0 20px #a6a6a6;
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	
+	margin: auto;
+	overflow:auto;
+	display:none;
+}
+
+.closebox {
+	background-image: url(InfoNav-Sprites.png);
+	background-position: -36px -24px;
+	cursor: pointer;
+	height: 14px;
+	width: 13px;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.title {
+	font-size: 16px;
+	line-height: 30px;
+}
+
+.searchBox {
+	display: inline-block;
+	width: 100%;
+	height: 32px;
+	margin-top: 10px;
+	font-size: 13px;
+	position:relative;
+	
+}
+
+.searchInput {
+	border: 1px solid #000;	
+	padding: 6px 10px 7px 35px;
+}
+
+searchlogo {
+	position:relative;
+}
+
+searchlogo:after {
+  content: '';
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	border: 1.2px solid #666;
+	border-radius: 50%;
+	left: 15px;
+	top: 0px;
+}
+searchlogo:before {
+	border-top: 1.2px solid #666;
+	content: '';
+	position: absolute;
+	width: 7.68px;
+	height: 0;
+	left: 10px;
+	top: 11px;
+	transform: rotate(135deg);
+}
+
+table {
+	width:100%;
+	min-width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 12px;
+}
+
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+th {
+	color: #666;
+	background-color: transparent;
+	font-family: wf_standard-font_bold,helvetica,arial,sans-serif;
+	
+}
+
+td {
+	border-top: 5px solid #eaeaea;
+}
+
+th,td{
+	padding: 0 0 0 10px;
+	height: 42px;
+	line-height: 42px;
+	text-align: left;
+	font-weight: 400;
+	-webkit-background-clip: padding;
+}
+
+tbody > tr:hover {
+	background-color : #eaeaea!important;
+}
+
+.noResults {
+	height: 30px;
+	width: 100%;
+	display: flex;
+	visibility:hidden;
+}
+
+.noResults .noResultBody {
+	align-self: flex-end;
+	text-align: center;
+	/*margin-top: 30px;*/
+	width:100%;
+}
+
+#loginDialog {
+	max-width:300px;
+	max-height: 390px;
+}
+
+.loginBody {
+	background-color: #f4f4f4;
+	height: 250px;
+	padding:28px;
+	position: relative;
+}
+
+.fieldTitle {
+	font-family: 'Segoe UI',wf_segoe-ui_normal,helvetica,arial,sans-serif;
+	font-size: 14px;
+	color: #333;
+	font-weight: 400;
+	margin-bottom: 10px;
+}
+
+.field {
+	margin-bottom: 20px;
+}
+
+.dialogFooter {
+	width:100%;
+	height:50px;
+	position:relative;
+}
+
+.activeButton {
+	padding: 9px 20px;
+	min-width: 120px;
+	background-color: #c8c8c8;
+	position:absolute;
+	bottom:0;
+	right:0;
+	color: #333;
+	text-align:center;
+	cursor: pointer;
+}
+
+.activeButton:hover {
+	background-color: #a6a6a6;
+}
+
+.spotlight 
+{
+	background-color: #f2c811;
+	margin-left: 14px;
+	width: 240px;
+	height: 270px;
+	padding: 14px;
+	overflow:auto;
+	font-size: 12px;
+	display:none;
+}
+.spotlightPassword, .spotlightUser {
+	visibility:hidden;
+}
+
+
+.clientId:focus + .spotlightClientID {
+	/*temporarily removed for clean interface... */
+	/*display: block;
+	position: absolute;
+	margin: 28px;
+	right: 0px;
+	top: 0px;*/
+  }
+  
+
+.username:focus + .spotlightUser {
+	display: block;
+	position: absolute;
+	margin: 28px;
+	right: 0px;
+	top: 0px;
+
+}
+
+.password:focus + .spotlightPassword {
+	display: block;
+	position: absolute;
+	margin: 28px;
+	right: 0px;
+	top: 0px;
+
+}
+
+#errorDialog{
+	background-color:#ffcccb
+}
+
+</style>
+</head>
+<body>
+
+<script>
+function rowClicked(object,x)
+{
+	try
+	{
+		if(object=="workspaceFilter")
+		{
+			window.workspaceId=x;
+		}
+		if(object=="metadataFilter")
+		{
+			window.metadataProfile=x;
+		}
+		if(object=="tagFilter")
+		{
+			window.focusTag=x;
+		}
+	}
+	catch(ex)
+	{
+		alert(ex)
+	}
+}
+
+function setCreds()
+{
+	window.username=document.getElementById("username").value
+	window.password=document.getElementById("password").value
+	window.clientId=document.getElementById("clientId").value
+}
+
+function hideDialog(reason,additional)
+{
+	var elements = document.getElementsByClassName("dialogWrapper")
+	for (var i = 0; i < elements.length; i++){
+		elements[i].style.display = "none";
+	}
+	document.getElementById("LoadingReason").innerHTML="<span>" + reason + "...<br />" + additional + "</span><br /><span id='progressAmount'></span>";
+	updateProgress("");
+}
+
+function appendStats(blurb)
+{
+	document.getElementById("stats").innerText+=blurb + "\n"
+}
+
+function updateProgress(blurb)
+{
+	document.getElementById("progressAmount").innerText=blurb;
+}
+
+function showDialog(id)
+{
+	document.getElementById(id).style.display = "block";
+}
+
+function showError(message)
+{
+	try
+	{
+		document.getElementById("errorText").innerHTML = message;
+		document.getElementById("errorDialog").style.display = "block";
+	}
+	catch(ex)
+	{
+		alert(ex)
+	}
+}
+
+function hideRow(row)
+{
+	row.style.display = "none";
+}
+
+function showRow(row)
+{
+	row.style.display = "table-row";
+}
+
+function filterTable(id,noResultsId,searchbox)
+{
+
+	searchString=searchbox.value.toLowerCase()
+	var tableRef = document.getElementById(id).getElementsByTagName('tbody')[0];
+	hit=false;
+	for (var i = 0, row; row = tableRef.rows[i]; i++)
+	{
+		console.log(row.cells)
+		if (row.cells[0].innerText.toLowerCase().indexOf(searchString) === -1)
+		{
+			hideRow(row)
+		}
+		else
+		{
+			hit=true;
+			showRow(row)
+		}
+	}
+	if(hit==false)
+	{
+		document.getElementById(id).style.visibility = "hidden";
+		document.getElementById(noResultsId).style.visibility = "visible";
+	}
+	else
+	{
+		document.getElementById(noResultsId).style.visibility = "hidden";
+		document.getElementById(id).style.visibility = "visible";
+	}
+}
+
+function addTableRow(tableId,values){
+	try {
+		var tableRef = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+		var newRow   = tableRef.insertRow();
+		values.forEach(function(value){
+			var newCell  = newRow.insertCell();
+			var newText  = document.createTextNode(value);
+			newCell.appendChild(newText);
+		});
+		newRow.onclick = function() { rowClicked(tableId,values[values.length-1]); };
+	}
+	catch(ex)
+	{
+		alert(ex)
+	}
+}
+
+function waitForEnter(event)
+{
+	if (event.keyCode === 13)
+	{
+		setCreds()
+	}
+}
+
+function setDefaults(id,value)
+{
+	document.getElementById(id).value=value
+}
+
+</script>
+
+<div id="pbi-loading"><!--onclick='appendStats("hi this is a test")'><!--onclick='showDialog("loginDialog")'> onclick='hideDialog("debug")'-->
+	<svg version="1.1" class="pulsing-svg-item" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" style="visibility:hidden;
+	 enable-background:new 0 0 36 36;
+	" xml:space="preserve"><g><path class="st1" d="M31.2,27.5h-0.7v-1.4h0.7c1.5,0,2.7-1.2,2.7-2.7V9.1c0-1.5-1.2-2.7-2.7-2.7H4.8c-1.5,0-2.7,1.2-2.7,2.7v14.2c0,1.5,1.2,2.7,2.7,2.7h0.7v1.4H4.8c-2.2,0-4.1-1.8-4.1-4.1V9.1c0-2.2,1.8-4.1,4.1-4.1h26.4c2.2,0,4.1,1.8,4.1,4.1v14.2C35.3,25.6,33.5,27.5,31.2,27.5"></path><path class="st1" d="M9.1,30.9c-1,0-1.9-0.8-1.9-1.9l0-4.4c0-1,0.8-1.9,1.9-1.9h0c1,0,1.9,0.8,1.9,1.9l0,4.4C11,30.1,10.1,30.9,9.1,30.9L9.1,30.9z"></path><path class="st1" d="M15,30.9c-1,0-1.9-0.8-1.9-1.9l0-11.2c0-1,0.8-1.9,1.9-1.9c1,0,1.9,0.8,1.9,1.9l0,11.2C16.9,30.1,16.1,30.9,15,30.9"></path><path class="st1" d="M26.9,30.9c-1,0-1.9-0.8-1.9-1.9l0-15.9c0-1,0.8-1.9,1.9-1.9c1,0,1.9,0.8,1.9,1.9l0,15.9C28.8,30,28,30.9,26.9,30.9"></path><path class="st1" d="M21,30.9c-1,0-1.9-0.8-1.9-1.9l0-8.3c0-1,0.8-1.9,1.9-1.9c1,0,1.9,0.8,1.9,1.9l0,8.3C22.9,30.1,22,30.9,21,30.9"></path></g></svg>
+	<div class="loadingText" id="LoadingReason">Initialising...</div>
+</div>
+<div class="dialogWrapper" id="errorDialog">
+	<!--div class="closebox"></div-->
+	<div class="title">Errors occured</div>
+	<!--jxbrowser bridge is broken for scriptContext... so for now no ajax... but that's easily put in later down the track for java, temporarily building it inside javascript logic which requires filtering here instead-->
+	<div class="noResultBody" id="errorText">defaultErrorMessage</div>
+</div>
+<div class="dialogWrapper" id="chooseTag">
+	<!--div class="closebox"></div-->
+	<div class="title">Select a Tag that includes all focus items</div>
+	<!--jxbrowser bridge is broken for scriptContext... so for now no ajax... but that's easily put in later down the track for java, temporarily building it inside javascript logic which requires filtering here instead-->
+	<div class="searchBox">
+		<searchlogo /><input id="searchBox" type="text" placeholder="Search" maxlength="200" class="searchInput" onInput="filterTable('tagFilter','noResultsMetadata',this)"></input>
+	</div>
+	<table id="tagFilter">
+		<thead>
+			<tr>
+				<th>NAME</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr onclick="rowClicked('tagFilter','')">
+				<td>-- None:Don't raw export any Focus Items --</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="noResults" id="noResultsTag">
+	  <div class="noResultBody">No tags found</div>
+	</div>
+</div>
+
+<div class="dialogWrapper" id="chooseMetadataProfile">
+	<!--div class="closebox"></div-->
+	<div class="title">Select a metadata profile to append to the report for the focus items</div>
+	<!--jxbrowser bridge is broken for scriptContext... so for now no ajax... but that's easily put in later down the track for java, temporarily building it inside javascript logic which requires filtering here instead-->
+	<div class="searchBox">
+		<searchlogo /><input id="searchBox" type="text" placeholder="Search" maxlength="200" class="searchInput" onInput="filterTable('metadataFilter','noResultsMetadata',this)"></input>
+	</div>
+	<table id="metadataFilter">
+		<thead>
+			<tr>
+				<th>NAME</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<div class="noResults" id="noResultsMetadata">
+	  <div class="noResultBody">No metadata Profiles found</div>
+	</div>
+</div>
+
+<div class="dialogWrapper" id="chooseWorkspace">
+	<!--div class="closebox"></div-->
+	<div class="title">Select a workspace to create a report</div>
+	<div class="searchBox">
+		<searchlogo /><input id="searchBox" type="text" placeholder="Search" maxlength="200" class="searchInput" onInput="filterTable('workspaceFilter','noResultsWorkspace',this)"></input>
+	</div>
+	<table id="workspaceFilter">
+		<thead>
+			<tr>
+				<th>NAME</th>
+				<th>READ ONLY</th>
+				<th>DEDICATED CAPACITY</th>
+				<th>ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr onclick="rowClicked('workspaceFilter','')">
+				<td>My Workspace</td>
+				<td>False</td>
+				<td>False</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="noResults" id="noResultsWorkspace">
+	  <div class="noResultBody">No workspaces found</div>
+	</div>
+</div>
+<div class="dialogWrapper" id="loginDialog">
+	<!--div class="closebox" onclick="hideDialog('Cancelled')"></div-->
+	<div class="title">Login to Power BI</div>
+	<div class="loginBody">
+			<div class="fieldTitle">Client ID</div>
+			<input id="clientId" class="field clientId" type="text" value="" /> <!-- Test 0853dfd6-5564-4765-bbd2-8196fe6c89da -->
+			<div class="spotlight spotlightClientID">
+				<div class="fieldTitle">Navigate to</div>
+				https://portal.azure.com/
+				<div class="fieldTitle">App Registrations</div>
+				On the left navigation pane click "App Registrations"
+				<div class="fieldTitle">New Registrations</div>
+				Choose a name and Single Tenant, no redirect<br />
+				<div class="fieldTitle">Finding your Client ID</div>
+				Application ID is your Client ID
+				<hr>
+				<div class="fieldTitle">Required Permissions (TBA, examples below)</div>
+				<div class="fieldTitle">User.Read</div>
+				Sign in and read user profile
+				<div class="fieldTitle">App.Read.All</div>
+				View All Power BI apps
+				<div class="fieldTitle">Capacity.Read.All</div>
+				View all capacities
+				<div class="fieldTitle">Capacity.ReadWrite.All</div>
+				Read and write all capacities
+				<div class="fieldTitle">Content.Create</div>
+				Create content
+				<div class="fieldTitle">Dashboard.Read.All</div>
+				View all dashboards
+				<div class="fieldTitle">Dashboard.ReadWrite.All</div>
+				Read and write all dashboards
+				<div class="fieldTitle">Dataflow.Read.All</div>
+				View all dataflows
+				<div class="fieldTitle">Dataflow.ReadWrite.All</div>
+				Read and write all dataflows
+				<div class="fieldTitle">Dataset.Read.All</div>
+				View all datasets
+				<div class="fieldTitle">Dataset.ReadWrite.All</div>
+				Read and write all datasets
+				<div class="fieldTitle">Gateway.Read.All</div>
+				View all gateways
+				<div class="fieldTitle">Gateway.ReadWrite.All</div>
+				Read and write all gateways
+				<div class="fieldTitle">Report.Read.All</div>
+				View all reports
+				<div class="fieldTitle">Report.ReadWrite.All</div>
+				Read and write all reports
+				<div class="fieldTitle">StorageAccount.Read.All</div>
+				View all storage accounts
+				<div class="fieldTitle">StorageAccount.ReadWrite.All</div>
+				Read and write all storage accounts
+				<div class="fieldTitle">Workspace.Read.All</div>
+				View all workspaces
+				<div class="fieldTitle">Workspace.ReadWrite.All</div>
+				Read and write all workspaces
+			</div>
+			<div class="fieldTitle">User</div>
+			<input id="username" class="field username" type="text" value="" />
+			<div class="spotlight spotlightUser">
+			</div>
+			<div class="fieldTitle">Password</div>
+			<input id="password" class="field password" type="password" value="" onkeypress="waitForEnter(event)"/>
+			<div class="spotlight spotlightPassword">
+				
+			</div>
+	</div>
+	<div class="dialogFooter">
+		<div class="activeButton" onclick="setCreds()">Login</div>
+	</div>
+</div>
+<div id="stats">
+
+</div>
+</body>
+</html>
